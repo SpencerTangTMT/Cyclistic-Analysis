@@ -35,4 +35,25 @@ INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202107-divvy-tripdata];
 INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202108-divvy-tripdata];
 INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 
--- 
+-- Removing null values from the combined dataset
+[dbo].[trip_12_month_not_null] AS
+(
+	SELECT *
+	FROM [dbo].[trip_12_month]
+	WHERE
+		[ride_id] NOT LIKE '%NULL%,
+		[rideable_type] NOT LIKE '%NULL%,
+		[started_at] NOT LIKE '%NULL%,
+		[ended_at] NOT LIKE '%NULL%,
+		[start_station_name] NOT LIKE '%NULL%,
+		[start_station_id] NOT LIKE '%NULL%,
+		[end_station_name] NOT LIKE '%NULL%,
+		[end_station_id] NOT LIKE '%NULL%,
+		[start_lat] NOT LIKE '%NULL%,
+		[start_lng] NOT LIKE '%NULL%,
+		[end_lat] NOT LIKE '%NULL%,
+		[end_lng] NOT LIKE '%NULL%,
+		[member_casual] NOT LIKE '%NULL%
+);
+
+
