@@ -75,3 +75,38 @@ WHERE
 ORDER BY
 	ride_length
 ;
+
+-- Deleting negative time in the length of each ride
+DELETE *
+FROM [trip_12_month_calculation]
+WHERE
+	DATEDIFF(SECOND, started_at, ended_at) <= 0
+;
+
+-- Checking the duplication of ride_id and comparision the number of ride_id and the figure of distinct_ride_id
+SELECT
+	COUNT(ride_id) AS total_ride_id,
+	COUNT(DISTINCT ride_id) AS distinct_ride_id
+FROM [trip_12_month_calculation]
+
+-- Removing the duplication of ride_id
+WITH cte
+     AS (SELECT ROW_NUMBER() OVER (PARTITION BY [ride_id]
+      ,[rideable_type]
+      ,[started_at]
+      ,[ended_at]
+      ,[start_station_name]
+      ,[start_station_id]
+      ,[end_station_name]
+      ,[end_station_id]
+      ,[start_lat]
+      ,[start_lng]
+      ,[end_lat]
+      ,[end_lng]
+      ,[member_casual]
+        ORDER BY ( SELECT 0)) RN
+         FROM   dbo.trip_12_month_ver1)
+DELETE FROM cte
+WHERE  RN > 1;
+
+-- 
