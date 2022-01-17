@@ -3,7 +3,7 @@ Date: December 10,2021
 Data Analyst: Spencer Tang
 Goal: How do annual members and casual riders use Cyclistic bikes differently?
 */
-
+-- PREPARE STEP
 -- After importing 12 files (12 months divvy-tripdata), creating empty table trip_12_month with the original table structure
 CREATE TABLE [dbo].[trip_12_month](
 	[ride_id] [varchar](50) NULL,
@@ -35,6 +35,7 @@ INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202107-divvy-tripdata];
 INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202108-divvy-tripdata];
 INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 
+-- PROCESS STEP
 -- Removing null values from the combined dataset
 [dbo].[trip_12_month_not_null] AS
 (
@@ -54,7 +55,13 @@ INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 		[end_lat] NOT LIKE '%NULL%,
 		[end_lng] NOT LIKE '%NULL%,
 		[member_casual] NOT LIKE '%NULL%
-),
+);
+
+-- Checking the duplication of ride_id and comparision the number of ride_id and the figure of distinct_ride_id
+SELECT
+	COUNT(ride_id) AS total_ride_id,
+	COUNT(DISTINCT ride_id) AS distinct_ride_id
+FROM [dbo].[trip_12_month_not_null]
 
 -- Removing the duplication of ride_id
 WITH cte
@@ -103,12 +110,8 @@ WHERE
 	DATEDIFF(SECOND, started_at, ended_at) <= 0
 ;
 
--- Checking the duplication of ride_id and comparision the number of ride_id and the figure of distinct_ride_id
-SELECT
-	COUNT(ride_id) AS total_ride_id,
-	COUNT(DISTINCT ride_id) AS distinct_ride_id
-FROM [trip_12_month_calculation]
+-- ANALYZE STEP
 
 
 
--- 
+
