@@ -3,7 +3,8 @@ Date: December 10,2021
 Data Analyst: Spencer Tang
 Goal: How do annual members and casual riders use Cyclistic bikes differently?
 */
--- PREPARE STEP
+
+-------------------------------------------------------------------------------PREPARE STEP---------------------------------------------------------------------------
 -- After importing 12 files (12 months divvy-tripdata), creating empty table trip_12_month with the original table structure
 CREATE TABLE [dbo].[trip_12_month](
 	[ride_id] [varchar](50) NULL,
@@ -35,27 +36,25 @@ INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202107-divvy-tripdata];
 INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202108-divvy-tripdata];
 INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 
--- PROCESS STEP
+---------------------------------------------------------------------------------PROCESS STEP-------------------------------------------------------------------------
 -- Removing null values from the combined dataset
-trip_12_month_not_null AS
-(
+INSERT INTO [dbo].[trip_12_month_not_null]
 	SELECT *
 	FROM [dbo].[trip_12_month]
 	WHERE
-		[ride_id] NOT LIKE '%NULL%',
-		[rideable_type] NOT LIKE '%NULL%',
-		[started_at] NOT LIKE '%NULL%',
-		[ended_at] NOT LIKE '%NULL%',
-		[start_station_name] NOT LIKE '%NULL%',
-		[start_station_id] NOT LIKE '%NULL%',
-		[end_station_name] NOT LIKE '%NULL%',
-		[end_station_id] NOT LIKE '%NULL%',
-		[start_lat] NOT LIKE '%NULL%',
-		[start_lng] NOT LIKE '%NULL%',
-		[end_lat] NOT LIKE '%NULL%',
-		[end_lng] NOT LIKE '%NULL%',
-		[member_casual] NOT LIKE '%NULL%'
-);
+		[ride_id] NOT LIKE '%NULL%'
+		AND [rideable_type] NOT LIKE '%NULL%'
+		AND [started_at] NOT LIKE '%NULL%'
+		AND [ended_at] NOT LIKE '%NULL%'
+		AND [start_station_name] NOT LIKE '%NULL%'
+		AND [start_station_id] NOT LIKE '%NULL%'
+		AND [end_station_name] NOT LIKE '%NULL%'
+		AND [end_station_id] NOT LIKE '%NULL%'
+		AND [start_lat] NOT LIKE '%NULL%'
+		AND [start_lng] NOT LIKE '%NULL%'
+		AND [end_lat] NOT LIKE '%NULL%'
+		AND [end_lng] NOT LIKE '%NULL%'
+		AND [member_casual] NOT LIKE '%NULL%'
 
 -- Checking the duplication of ride_id and comparision the number of ride_id and the figure of distinct_ride_id
 SELECT
