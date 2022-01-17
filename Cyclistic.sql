@@ -37,7 +37,7 @@ INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 
 -- PROCESS STEP
 -- Removing null values from the combined dataset
-[dbo].[trip_12_month_not_null] AS
+trip_12_month_not_null AS
 (
 	SELECT *
 	FROM [dbo].[trip_12_month]
