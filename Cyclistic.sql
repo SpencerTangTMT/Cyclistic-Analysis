@@ -56,6 +56,26 @@ INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 		[member_casual] NOT LIKE '%NULL%
 );
 
+-- Removing the duplication of ride_id
+WITH cte
+     AS (SELECT ROW_NUMBER() OVER (PARTITION BY [ride_id]
+      ,[rideable_type]
+      ,[started_at]
+      ,[ended_at]
+      ,[start_station_name]
+      ,[start_station_id]
+      ,[end_station_name]
+      ,[end_station_id]
+      ,[start_lat]
+      ,[start_lng]
+      ,[end_lat]
+      ,[end_lng]
+      ,[member_casual]
+        ORDER BY ( SELECT 0)) RN
+         FROM   [dbo].[trip_12_month_not_null])
+DELETE FROM cte
+WHERE  RN > 1;
+
 -- Calculating the length of each ride and the day of the week that each ride started
 INSERT INTO [trip_12_month_calculation]
 	SELECT *,
@@ -89,24 +109,6 @@ SELECT
 	COUNT(DISTINCT ride_id) AS distinct_ride_id
 FROM [trip_12_month_calculation]
 
--- Removing the duplication of ride_id
-WITH cte
-     AS (SELECT ROW_NUMBER() OVER (PARTITION BY [ride_id]
-      ,[rideable_type]
-      ,[started_at]
-      ,[ended_at]
-      ,[start_station_name]
-      ,[start_station_id]
-      ,[end_station_name]
-      ,[end_station_id]
-      ,[start_lat]
-      ,[start_lng]
-      ,[end_lat]
-      ,[end_lng]
-      ,[member_casual]
-        ORDER BY ( SELECT 0)) RN
-         FROM   dbo.trip_12_month_calculation)
-DELETE FROM cte
-WHERE  RN > 1;
+
 
 -- 
