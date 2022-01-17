@@ -105,7 +105,7 @@ WITH cte
       ,[end_lng]
       ,[member_casual]
         ORDER BY ( SELECT 0)) RN
-         FROM   dbo.trip_12_month_ver1)
+         FROM   dbo.trip_12_month_calculation)
 DELETE FROM cte
 WHERE  RN > 1;
 
