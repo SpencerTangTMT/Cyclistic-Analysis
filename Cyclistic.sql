@@ -82,14 +82,6 @@ WITH cte
 DELETE FROM cte
 WHERE  RN > 1;
 
--- Calculating the length of each ride and the day of the week that each ride started
-INSERT INTO [trip_12_month_calculation]
-	SELECT *,
-		DATEDIFF(SECOND, started_at, ended_at) AS ride_length,
-		DATEPART(WEEKDAY, started_at) AS day_of_week
-	FROM [dbo].[trip_12_month_not_null]
-;
-
 -- Checking the length of each ride where trip duration is less than or equals 0 second
 SELECT
 	[started_at],
@@ -109,7 +101,16 @@ WHERE
 	DATEDIFF(SECOND, started_at, ended_at) <= 0
 ;
 
--- ANALYZE STEP
+
+-- Calculating the length of each ride and the day of the week that each ride started
+INSERT INTO [trip_12_month_calculation]
+	SELECT *,
+		DATEDIFF(SECOND, started_at, ended_at) AS ride_length,
+		DATEPART(WEEKDAY, started_at) AS day_of_week
+	FROM [dbo].[trip_12_month_not_null]
+;
+
+------------------------------------------------------------------------------ ANALYZE STEP-------------------------------------------------------------------------
 
 
 
