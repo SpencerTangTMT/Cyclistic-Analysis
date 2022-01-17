@@ -55,7 +55,7 @@ INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 		[end_lng] NOT LIKE '%NULL%,
 		[member_casual] NOT LIKE '%NULL%
 );
-;
+
 -- Removing the duplication of ride_id
 WITH cte
      AS (SELECT ROW_NUMBER() OVER (PARTITION BY [ride_id]
