@@ -56,7 +56,19 @@ trip_12_month_not_null AS
 		[end_lng] NOT LIKE '%NULL%,
 		[member_casual] NOT LIKE '%NULL%
 );
-
+-- Combining all tables into one (between 10.2020 and 09.2021)
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202010-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202011-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202012-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202101-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202102-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202103-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202104-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202105-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202106-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202107-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202108-divvy-tripdata];
+INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 -- Checking the duplication of ride_id and comparision the number of ride_id and the figure of distinct_ride_id
 SELECT
 	COUNT(ride_id) AS total_ride_id,
