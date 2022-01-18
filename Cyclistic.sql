@@ -96,7 +96,7 @@ ORDER BY
 ;
 
 -- Deleting negative time in the length of each ride
-DELETE *
+DELETE 
 FROM [trip_12_month_not_null]
 WHERE
 	DATEDIFF(SECOND, started_at, ended_at) <= 0
