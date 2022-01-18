@@ -38,6 +38,7 @@ INSERT INTO [dbo].[trip_12_month] SELECT * FROM dbo.[202109-divvy-tripdata];
 
 ---------------------------------------------------------------------------------PROCESS STEP-------------------------------------------------------------------------
 -- Removing null values from the combined dataset
+WITH
 INSERT INTO [dbo].[trip_12_month_not_null]
 	SELECT *
 	FROM [dbo].[trip_12_month]
@@ -55,13 +56,13 @@ INSERT INTO [dbo].[trip_12_month_not_null]
 		AND [end_lat] NOT LIKE '%NULL%'
 		AND [end_lng] NOT LIKE '%NULL%'
 		AND [member_casual] NOT LIKE '%NULL%'
-
+,
 -- Checking the duplication of ride_id and comparision the number of ride_id and the figure of distinct_ride_id
 SELECT
 	COUNT(ride_id) AS total_ride_id,
 	COUNT(DISTINCT ride_id) AS distinct_ride_id
 FROM [dbo].[trip_12_month_not_null]
-
+,
 -- Removing the duplication of ride_id
 WITH cte
      AS (SELECT ROW_NUMBER() OVER (PARTITION BY [ride_id]
