@@ -87,10 +87,10 @@ WHERE  RN > 1;
 SELECT
 	[started_at],
 	[ended_at],
-	DATEDIFF(SECOND, started_at, ended_at) AS ride_length
+	DATEDIFF(MINUTE, started_at, ended_at) AS ride_length
 FROM [trip_12_month_not_null]
 WHERE
-	DATEDIFF(SECOND, started_at, ended_at) <= 0
+	DATEDIFF(MINUTE, started_at, ended_at) <= 0
 ORDER BY
 	ride_length
 ;
@@ -99,7 +99,7 @@ ORDER BY
 DELETE 
 FROM [trip_12_month_not_null]
 WHERE
-	DATEDIFF(SECOND, started_at, ended_at) <= 0
+	DATEDIFF(MINUTE, started_at, ended_at) <= 0
 ;
 
 -- Calculating the length of each ride and the day of the week that each ride started
