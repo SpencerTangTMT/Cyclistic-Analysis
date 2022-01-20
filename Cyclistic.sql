@@ -83,7 +83,7 @@ WITH cte
 DELETE FROM cte
 WHERE  RN > 1;
 
--- Checking the length of each ride where trip duration is less than or equals 0 second
+-- Checking the length of each ride where trip duration is less than or equals 60 seconds
 SELECT
 	[started_at],
 	[ended_at],
