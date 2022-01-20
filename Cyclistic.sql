@@ -99,7 +99,7 @@ ORDER BY
 DELETE 
 FROM [trip_12_month_not_null]
 WHERE
-	DATEDIFF(MINUTE, started_at, ended_at) <= 0
+	DATEDIFF(MINUTE, started_at, ended_at) < 1
 ;
 
 -- Calculating the length of each ride and the day of the week that each ride started
