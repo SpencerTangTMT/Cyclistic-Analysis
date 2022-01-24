@@ -111,7 +111,29 @@ INSERT INTO [trip_12_month_calculation]
 ;
 
 ------------------------------------------------------------------------------ ANALYZE STEP-------------------------------------------------------------------------
+-- Calculating the mean of ride_length, the max of ride_length
+SELECT
+	AVG(ride_length),
+	MAX(ride_length),
+	MIN(ride_length)
+FROM [dbo].[trip_12_month_calculation]
+;
 
+-- Calculating the mode of day_of week
+SELECT TOP 1	
+FROM
+	[dbo].[trip_12_month_calculation]
+GROUP BY 
+	day_of_week
+ODER BY
+	COUNT(*) DESC
+;
+
+-- Calculating the average ride_length for members and casual riders
+
+-- Calculating the average ride_length for users by day_of_week
+
+-- Calculating the number of riders for users by day_of_week
 
 
 
