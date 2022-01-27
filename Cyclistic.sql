@@ -119,21 +119,60 @@ SELECT
 FROM [dbo].[trip_12_month_calculation]
 ;
 
--- Calculating the mode of day_of week
-SELECT TOP 1	
+-- Calculating the mode of day_of week and the number of riders for users by day_of_week
+SELECT
+	CASE
+      		WHEN day_of_week = 1 THEN 'Sunday'
+      		WHEN day_of_week = 2 THEN 'Monday'
+		WHEN day_of_week = 3 THEN 'Tuesday'
+		WHEN day_of_week = 4 THEN 'Wednesday'
+		WHEN day_of_week = 5 THEN 'Thursday'
+		WHEN day_of_week = 6 THEN 'Friday'
+	ELSE
+		'Saturday'
+	END
+	AS the_day_of_week,
+	member_casual,
+	COUNT(*) as count_day_of_week
 FROM
 	[dbo].[trip_12_month_calculation]
 GROUP BY 
-	day_of_week
-ODER BY
-	COUNT(*) DESC
+	day_of_week,
+	member_casual
+ORDER BY
+	COUNT(*) DESC	
 ;
 
 -- Calculating the average ride_length for members and casual riders
+SELECT
+	member_casual,
+	AVG(ride_length) AS average_ride_length	 -- Unit: Minute
+FROM
+	[dbo].[trip_12_month_calculation]
+GROUP BY 
+	member_casual
+;
 
 -- Calculating the average ride_length for users by day_of_week
-
--- Calculating the number of riders for users by day_of_week
-
-
-
+SELECT
+	member_casual,
+	CASE
+      		WHEN day_of_week = 1 THEN 'Sunday'
+      		WHEN day_of_week = 2 THEN 'Monday'
+		WHEN day_of_week = 3 THEN 'Tuesday'
+		WHEN day_of_week = 4 THEN 'Wednesday'
+		WHEN day_of_week = 5 THEN 'Thursday'
+		WHEN day_of_week = 6 THEN 'Friday'
+	ELSE
+		'Saturday'
+	END
+	AS the_day_of_week,
+	AVG(ride_length) AS average_ride_length	 -- Unit: Minute
+FROM
+	[dbo].[trip_12_month_calculation]
+GROUP BY 
+	day_of_week,
+	member_casual
+ORDER BY
+	average_ride_length DESC
+;
